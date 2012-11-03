@@ -1,0 +1,268 @@
+#! python
+
+#
+# pysay: a Python translation from the original cowsay Perl
+# code by Tony Monroe. This version is fully compatible with
+# the original .cow files (and comes packed with a new one!)
+# Please, read the README file for further information.
+#
+# Copyright (c) 1999, 2000 Tony Monroe.
+# Copyright (c) 2012 Nicola Lamacchia.
+# All rights reserved.
+#
+# This software is released under the Artistic License 2.0,
+# in complete respect with the original cowsay license.
+# A copy of the license should have been provided in the
+# distribution of this software in a file called "LICENSE".
+# You can also find an online copy of the license at:
+#  * http://www.perlfoundation.org/artistic_license_2_0
+#  * http://opensource.org/licenses/Artistic-2.0
+#
+
+import os
+import re
+import sys
+import glob
+import string
+import argparse
+import textwrap
+from itertools import groupby
+
+###
+### global declarations
+###
+
+__version__ = '1.0'
+
+progname = os.path.basename(sys.argv[0])
+if os.getenv("COWPATH"):
+    cowpath = os.getenv("COWPATH")
+else:
+    if sys.platform == 'win32':
+        cowpath = os.path.join(os.getenv("APPDATA"), "cows")
+        # append the relative path .\cows as a fallback folder
+        cowpat = os.pathsep.join([cowpath, '.\\cows'])
+    else:
+        cowpath = os.path.join(sys.prefix, "share/cows")
+        # the following is necessary to mantain compatibility
+        # with some GNU/Linux distro for which, i think, some
+        # packagers took the liberty of tinkering with the
+        # source code of the original cowsay, modifying
+        # the original cowpath
+        fallback_cowpath = '/usr/share/cowsay/cows'
+        cowpath = os.pathsep.join([cowpath, fallback_cowpath])
+
+###
+### argparse actions
+###
+
+class ListCows(argparse.Action):
+    def __call__(self, parser, namespace, values, option_string=None):
+        cowdirs = cowpath.split(os.pathsep)
+        cowdirs.sort()
+        for d in cowdirs:
+            print "Cow files in %s" % d
+            filelist = [os.path.splitext(os.path.split(filename)[1])[0] for
+                        filename in glob.glob(os.path.join(d, "*.cow"))]
+            filelist.sort()
+            filestring = ' '.join(filelist)
+            for line in textwrap.wrap(filestring, break_on_hyphens=False,
+                                      width=76):
+                print line
+        return
+
+###
+### functions
+###
+
+# draw the balloon
+def construct_balloon(message):
+    balloon_lines = []
+    message = message.splitlines()
+    maxlen = len(max(message, key=len))
+    maxlen_borders = maxlen + 2
+    formatstr = '{0} {1:%s} {2}' % maxlen
+    if 'think' in progname:
+        tail = 'o'
+        # borders = [up-left, up-right, down-left, down-right, left, right]
+        borders = ["(", ")", "(", ")", "(", ")"]
+    else:
+        tail = '\\'
+        if len(message) < 2:
+            borders = ["<", ">"]
+        else:
+            borders = ["/", "\\", "\\", "/", "|", "|"]
+    balloon_lines.append(" " + "_" * maxlen_borders)
+    balloon_lines.append(formatstr.format(borders[0], message[0], borders[1]))
+    if len(message) > 1:
+        for line in message[1:-1]:
+            balloon_lines.append(formatstr.format(borders[4],
+                                                  line,
+                                                  borders[5]))
+        balloon_lines.append(formatstr.format(borders[2],
+                                              message[-1],
+                                              borders[3]))
+    balloon_lines.append(' ' + '-' * maxlen_borders)
+    return balloon_lines, tail
+
+# read the facial expression flags
+def construct_face(args):
+    tongue = '  '
+    if args.borg:
+        eyes = '=='
+    elif args.dead:
+        eyes = 'xx'
+        tongue = 'U '
+    elif args.greedy:
+        eyes = '$$'
+    elif args.paranoid:
+        eyes = '@@'
+    elif args.stoned:
+        eyes = '**'
+        tongue = 'U '
+    elif args.tired:
+        eyes = '--'
+    elif args.wired:
+        eyes = 'OO'
+    elif args.young:
+        eyes = '..'
+    else:
+        eyes = args.eyes
+        tongue = args.tongue
+    return eyes, tongue
+
+# read the .cow file
+def cow_parse(cow_path, tail, eyes, tongue):
+    perl_cow = open(cow_path).readlines()
+    perl_cow = [i.replace("$thoughts", tail).replace("$eyes", eyes) \
+                .replace("$tongue", tongue).replace("\\\\", "\\") \
+                .replace("\$", "$").replace("\@", "@") for i in perl_cow]
+    the_cow = ''
+    cow_line = False
+    for i in perl_cow:
+        if 'EOC' not in i and cow_line:
+            the_cow += i
+        if 'the_cow' in i:
+            cow_line = True
+    return the_cow.rstrip()
+
+# return the full path in which the .cow file is located
+def get_cow_path(f):
+    full_path = ''
+    #if os.path.isfile(f) or os.path.isfile(f + '.cow'):
+    if os.path.split(f)[0] != '': 
+        if os.path.isfile(f):
+            full_path = f
+        elif os.path.isfile(f + '.cow'):
+            full_path = f + '.cow'
+        else:
+            print "Could not find %s cowfile in %s" % (f, os.path.split(f)[0])
+    else:
+        for d in cowpath.split(os.pathsep):
+            if os.path.isfile(os.path.join(d, f)):
+                full_path = os.path.join(d, f)
+                break
+            elif os.path.isfile(os.path.join(d, f + '.cow')):
+                full_path = os.path.join(d, f + '.cow')
+                break
+        if full_path == '':
+            print "Could not find %s cowfile!" % f
+            sys.exit(1)
+    return full_path
+
+# emulate the perl Text::Wrap::fill() behaviour
+def fill(text, col):
+    wrapped_paragraphs = []
+    # the following line splits the text in paragraphs as Perl does
+    # (see sub fill in the Text::Wrap/Wrap.pm source in the Perl library)
+    paragraphs = re.compile("\n\s+").split(text.strip())
+    for p in paragraphs:
+        p = ' '.join(p.split())   # take care of all other whitespaces
+        wrapped_paragraphs.append(textwrap.fill(p,
+                                                width=col,
+                                                expand_tabs=False,
+                                                break_on_hyphens=False))
+    return '\n\n'.join(wrapped_paragraphs)
+
+###
+### main
+###
+
+def main(argv=None):
+    parser = argparse.ArgumentParser(
+                 prog="py{say|think}",
+                 description="A Python version of cowsay. Mook!",
+                 epilog="When using eyes/tongue flags, \
+                         -e and -T will be ignored.")
+    
+    parser.add_argument("-l", action=ListCows, nargs=0,
+                        help="list all available cow models and exit")
+
+    # mutually exclusive group
+    group = parser.add_mutually_exclusive_group()
+
+    # mutually exclusive arguments in the group
+    group.add_argument("-b", action="store_true", dest="borg",
+                       help="eyes are \"==\" (borg)")
+    group.add_argument("-d", action="store_true", dest="dead",
+                       help="eyes are \"xx\" and tongue is \"U \" (dead)")
+    group.add_argument("-g", action="store_true", dest="greedy",
+                       help="eyes are \"$$\" (greedy)")
+    group.add_argument("-p", action="store_true", dest="paranoid",
+                       help="eyes are \"@@\" (paranoid)")
+    group.add_argument("-s", action="store_true", dest="stoned",
+                       help="eyes are \"**\" and tongue is \"U \" (stoned)")
+    group.add_argument("-t", action="store_true", dest="tired",
+                       help="eyes are \"--\" (tired)")
+    group.add_argument("-w", action="store_true", dest="wired",
+                       help="eyes are \"OO\" (wired)")
+    group.add_argument("-y", action="store_true", dest="young",
+                       help="eyes are \"..\" (young)")
+
+    # other arguments
+    parser.add_argument("-n", action="store_true", dest="expand",
+                        help="disable word wrap and ignore -W, \
+                        allowing FIGlet and ASCII art")
+    parser.add_argument("-f", default="default.cow", metavar="COWFILE",
+                        help="file of the \"cow\" model to show")
+    parser.add_argument("-W", default=40, type=int, dest="columns",
+                        help="maximum width for the text within the balloon \
+                        (default: 40)")
+    parser.add_argument("-e", default="oo", dest="eyes",
+                        help="must be a quoted string of two characters")
+    parser.add_argument("-T", default="  ", dest="tongue",
+                        help="must be a quoted string of two characters")
+    parser.add_argument("text", nargs='?',
+                        help="what the cow says (within quotes)")
+
+    # parse sys.argv
+    args = parser.parse_args()
+
+    if not args.text:
+        message = sys.stdin.read()
+        # there are buggy fortunes w/ backspaces, so:
+        message = message.replace("\x08", "")
+    else:
+        if args.expand:
+            parser.print_help()
+            sys.exit(2)
+        else:
+            message = args.text
+
+    if not args.expand:
+        message = fill(message, args.columns)
+    else:
+        # vulnerable to buggy fortunes or bad formatted text.
+        message = message.expandtabs()
+        
+    balloon_lines, tail = construct_balloon(message)
+    eyes, tongue = construct_face(args)
+    cow_path = get_cow_path(args.f)
+    the_cow = cow_parse(cow_path, tail, eyes, tongue)
+    for line in balloon_lines:
+        print line
+    print the_cow
+
+# "the end is the beginning is the end"    
+if __name__ == '__main__':
+    sys.exit(main())
