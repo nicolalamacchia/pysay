@@ -41,7 +41,7 @@ else:
     if sys.platform == 'win32':
         cowpath = os.path.join(os.getenv("APPDATA"), "cows")
         # append the relative path .\cows as a fallback folder
-        cowpat = os.pathsep.join([cowpath, '.\\cows'])
+        cowpat = os.pathsep.join([cowpath, ".\\cows"])
     else:
         cowpath = os.path.join(sys.prefix, "share/cows")
         # the following is necessary to mantain compatibility
@@ -102,7 +102,7 @@ def construct_balloon(message):
         balloon_lines.append(formatstr.format(borders[2],
                                               message[-1],
                                               borders[3]))
-    balloon_lines.append(' ' + '-' * maxlen_borders)
+    balloon_lines.append(" " + "-" * maxlen_borders)
     return balloon_lines, tail
 
 # read the facial expression flags
@@ -149,11 +149,10 @@ def cow_parse(cow_path, tail, eyes, tongue):
 # return the full path in which the .cow file is located
 def get_cow_path(f):
     full_path = ''
-    #if os.path.isfile(f) or os.path.isfile(f + '.cow'):
     if os.path.split(f)[0] != '': 
         if os.path.isfile(f):
             full_path = f
-        elif os.path.isfile(f + '.cow'):
+        elif os.path.isfile(f + ".cow"):
             full_path = f + '.cow'
         else:
             print "Could not find %s cowfile in %s" % (f, os.path.split(f)[0])
@@ -162,8 +161,8 @@ def get_cow_path(f):
             if os.path.isfile(os.path.join(d, f)):
                 full_path = os.path.join(d, f)
                 break
-            elif os.path.isfile(os.path.join(d, f + '.cow')):
-                full_path = os.path.join(d, f + '.cow')
+            elif os.path.isfile(os.path.join(d, f + ".cow")):
+                full_path = os.path.join(d, f + ".cow")
                 break
         if full_path == '':
             print "Could not find %s cowfile!" % f
@@ -232,7 +231,7 @@ def main(argv=None):
                         help="must be a quoted string of two characters")
     parser.add_argument("-T", default="  ", dest="tongue",
                         help="must be a quoted string of two characters")
-    parser.add_argument("text", nargs='?',
+    parser.add_argument("text", nargs="?",
                         help="what the cow says (within quotes)")
 
     # parse sys.argv
@@ -245,7 +244,7 @@ def main(argv=None):
     else:
         if args.expand:
             parser.print_help()
-            sys.exit(2)
+            return 2
         else:
             message = args.text
 
