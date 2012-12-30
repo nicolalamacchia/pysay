@@ -1,4 +1,3 @@
-
 pysay
 =====
 _v1.0, 3 Nov. 2012_
@@ -6,7 +5,7 @@ _v1.0, 3 Nov. 2012_
 Well, there's not so much to say about pysay, it's basically... cowsay! :D
 This version, though, has been completely rewritten into Python, trying to
 mantain the original behaviour of cowsay. Some gotchas has been corrected,
-such as the way cowsay handles the *face* flags (you can use -d -b toghether
+such as the way cowsay handles the *face* flags (you can use -d -b together
 and you can do the same with -g -T, which is not so bad, but not so smart too).
 Other minor little strange glitches have been fixed naturally during the
 translation process. The way the input text is processed has been slightly
