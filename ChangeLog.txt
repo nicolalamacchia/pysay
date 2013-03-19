@@ -1,0 +1,32 @@
+Changelog
+
+2013-03-18  v1.4.3
+
+    * cows/default.cow: Removed to avoid conflicts with cowsay;
+    python.cow is now the default cow.
+
+    * cows/python.cow: Slightly improved.
+
+    * scripts/pysay: General refactoring.
+    Removed unused imports.
+    Fixed quotation marks inconsistency, now use single quotes only.
+    Added docstrings.
+    The code is now PEP8 compliant.
+    (get_cow_path): Use 'cow' instead of 'f'.
+
+    * scripts/pysay (main): The argument parser has its own class now.
+    (PysayParser): New class.
+
+    * scripts/pysay (cow_parse): Corrected gotcha in the substitutions
+    within perl_cow.
+    (fill): Corrected gotcha in the regex of 'paragraphs'.
+    (construct_balloon): Corrected gotcha in the 'formatstr' expression.
+
+    * scripts/pysay (construct_face): Fixed bugs: use unicode and
+    consider only the first two characters for 'eyes' and 'tongue'
+    passed with the -e and -T arguments.
+
+2012-11-03  v1.0
+
+    First version
+

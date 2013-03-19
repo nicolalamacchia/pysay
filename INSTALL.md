@@ -1,6 +1,6 @@
  pysay installation
 ====================
-_this file is part of pysay v1.0_
+_this file is part of pysay v1.4.3_
 
 In any case you need python: the latest python 2 (not 3) version should work.
 Please consider to install the standard cowsay: you might want to enjoy the
@@ -30,9 +30,3 @@ other fun *cows* that are bundled with that software.
    - (optional) create a symlink to pysay called pythink in the same folder of
      pysay
 
-***
-
-N.B.: if you install the Tony Monroe's cowsay, you can (you should) delete the
-default.cow file that comes with pysay. In the most common case it will be
-overwritten, otherwise you must find it (it's located in the same folder of
-python.cow) and remove it manually.

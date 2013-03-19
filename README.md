@@ -1,6 +1,6 @@
 pysay
 =====
-_v1.0, 3 Nov. 2012_
+_v1.4.3, 18 Mar. 2013_
 
 Well, there's not so much to say about pysay, it's basically... cowsay! :D
 This version, though, has been completely rewritten into Python, trying to
@@ -30,7 +30,7 @@ This package contains the new cow file pyhton.cow.
 ------
 
   Type "pysay -h" to understand the pysay usage.
-  
+
   Look at the source code for more technical details.
 
  Troubleshooting
@@ -39,23 +39,28 @@ This package contains the new cow file pyhton.cow.
   Feel free to contact me if you have any problems, questions or suggestions
   related to this software.
 
+ History
+---------
+
+  Refer to ChangeLog.txt for the history of changes made to the code.
+
  License
 ---------
 
   This software is released under the Artistic License 2.0, see LICENSE file
   for details.
-  
+
  Contacts
 ----------
 
   Electronic mail:
-  
+
     nicola dadot lamacchia daampersat gmail dadot com
-  
+
   Be smart.
 
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-  
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 Cheers!
 
 Nicola Lamacchia
