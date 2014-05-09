@@ -1,6 +1,6 @@
 pysay
 =====
-_v1.4.3, 18 Mar. 2013_
+_v1.5.1, 09 May 2014_
 
 Well, there's not so much to say about pysay, it's basically... cowsay! :D
 This version, though, has been completely rewritten into Python, trying to

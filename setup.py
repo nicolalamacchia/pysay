@@ -1,13 +1,11 @@
 #!/usr/bin/env python
 
-#
-# This file is part of pysay v1.4.3 (GitHub edition)
-#
+# This file is part of pysay v1.5.1 (GitHub edition)
 
 from distutils.core import setup
 
 setup(name='pysay',
-      version='1.4.3',
+      version='1.5.1',
       description='A Python version of cowsay',
       author='Nicola Lamacchia',
       author_email='nicola.lamacchia@gmail.com',
