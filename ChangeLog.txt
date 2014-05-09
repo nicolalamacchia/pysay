@@ -1,5 +1,9 @@
 Changelog
 
+2014-05-09 v1.5.1
+
+    * scripts/pysay: The script is now compatible with Python 2 and 3.
+
 2013-03-18  v1.4.3
 
     * cows/default.cow: Removed to avoid conflicts with cowsay;
