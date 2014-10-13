@@ -1,8 +1,8 @@
  pysay installation
 ====================
-_this file is part of pysay v1.4.3_
+_this file is part of pysay v2.0.0_
 
-In any case you need python: the latest python 2 (not 3) version should work.
+In any case you need python: the latest Python (2 or 3) version should work.
 Please consider to install the standard cowsay: you might want to enjoy the
 other fun *cows* that are bundled with that software.
 
@@ -10,7 +10,6 @@ other fun *cows* that are bundled with that software.
 
    - cd into the package root folder
    - `# python setup.py install`
-   - `# ln -s $(which pysay) $(dirname $(which pysay))/pythink`
 
 * Under a Win OS just execute the script from a shell (MSDOS emulator):
 

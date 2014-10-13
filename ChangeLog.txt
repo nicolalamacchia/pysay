@@ -1,5 +1,12 @@
 Changelog
 
+2014-10-14 v2.0.0
+
+    * scripts/pysay: Major improvements.
+	Bugs fixed, works on Debian.
+
+    * setup.py: Added more detailed information.
+
 2014-05-09 v1.5.1
 
     * scripts/pysay: The script is now compatible with Python 2 and 3.

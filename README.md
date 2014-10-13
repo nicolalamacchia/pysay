@@ -1,6 +1,6 @@
 pysay
 =====
-_v1.5.1, 09 May 2014_
+_v2.0.0, 14 Oct 2014_
 
 Well, there's not so much to say about pysay, it's basically... cowsay! :D
 This version, though, has been completely rewritten into Python, trying to
@@ -17,14 +17,14 @@ in the INSTALL.md file that apply to your system.
 
 If you're interested in the cowsay story, the README file of the standard
 cowsay 3.03 by Tony Monroe should satisfy your curiosity (you can find it at:
-<http://www.nog.net/~tony/warez/>).
+[http://www.nog.net/~tony/warez](https://web.archive.org/web/20131220090456/http://www.nog.net/~tony/warez)).
 
 This package contains the new cow file pyhton.cow.
 
  Installation
 --------------
 
-  Read the INSTALL.md file, please.
+  Please read INSTALL.md.
 
  Help
 ------
