@@ -10,7 +10,7 @@ and you can do the same with -g -T, which is not so bad, but not so smart too).
 Other minor little strange glitches have been fixed naturally during the
 translation process. The way the input text is processed has been slightly
 modified, improving the robustness against bad formatted text (please, have a
-look at the source code for further informations).
+look at the source code for further information).
 
 The script is now a little more multi-platform, just follow the instructions
 in the INSTALL.md file that apply to your system.
