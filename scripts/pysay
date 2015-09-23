@@ -40,6 +40,11 @@ else:
             os.path.join(os.getenv("APPDATA"), "cows"),
             ".\\cows"
         ])
+    elif sys.platform == "darwin":
+        #for mac osx
+        cowpath = os.pathsep.join([
+            os.path.join(sys.prefix, "/usr/local/share/cows/"),
+        ])  
     else:
         cowpath = os.pathsep.join([
             os.path.join(sys.prefix, "share/cows"),
