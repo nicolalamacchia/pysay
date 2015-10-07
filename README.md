@@ -4,7 +4,7 @@ _v2.0.0, 14 Oct 2014_
 
 Well, there's not so much to say about pysay, it's basically... cowsay! :D
 This version, though, has been completely rewritten into Python, trying to
-mantain the original behaviour of cowsay. Some gotchas has been corrected,
+maintain the original behaviour of cowsay. Some gotchas has been corrected,
 such as the way cowsay handles the *face* flags (you can use -d -b together
 and you can do the same with -g -T, which is not so bad, but not so smart too).
 Other minor little strange glitches have been fixed naturally during the
@@ -19,7 +19,7 @@ If you're interested in the cowsay story, the README file of the standard
 cowsay 3.03 by Tony Monroe should satisfy your curiosity (you can find it at:
 [http://www.nog.net/~tony/warez](https://web.archive.org/web/20131220090456/http://www.nog.net/~tony/warez)).
 
-This package contains the new cow file pyhton.cow.
+This package contains the new cow file python.cow.
 
  Installation
 --------------

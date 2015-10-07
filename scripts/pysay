@@ -49,7 +49,7 @@ else:
         cowpath = os.pathsep.join([
             os.path.join(sys.prefix, "share/cows"),
             os.path.join(sys.prefix, "local/share/cows"),
-            # The following is necessary to mantain compatibility
+            # The following is necessary to maintain compatibility
             # with some GNU/Linux distro for which, I think, some
             # packagers took the liberty of tinkering with the
             # source code of the original cowsay, modifying
