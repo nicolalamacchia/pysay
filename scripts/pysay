@@ -7,7 +7,7 @@
 # Please, read the README file for further information.
 #
 # Copyright (c) 1999, 2000 Tony Monroe.
-# Copyright (c) 2012, 2013, 2014 Nicola Lamacchia.
+# Copyright (c) 2012-2015 Nicola Lamacchia.
 # All rights reserved.
 #
 # This software is released under the Artistic License 2.0,
@@ -157,8 +157,11 @@ def cow_parse(cow_path, tail, eyes, tongue):
         unicode(
             line
             .replace("$thoughts", tail)
+            .replace("${thoughts}", tail)
             .replace("$eyes", eyes)
+            .replace("${eyes}", eyes)
             .replace("$tongue", tongue)
+            .replace("${tongue}", tongue)
             .replace("\\\\", "\\")
             .replace("\\$", "$").replace("\\@", "@")
         )
