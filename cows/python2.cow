@@ -1,0 +1,17 @@
+#
+# This file is part of pysay.
+# Author: Peter Bier
+#
+
+$the_cow = <<"EOC";
+     $thoughts
+      $thoughts
+       $thoughts    __
+        $thoughts  {0O}
+           \__/
+           /^/
+          ( (
+           \_\____
+           ( _____)
+          (________()Oo.
+EOC
