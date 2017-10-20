@@ -74,7 +74,7 @@ class ListCows(argparse.Action):
                 continue
             filelist.sort()
             filestring = " ".join(filelist)
-            print("Cow files in {}:".format(d))
+            print("Cow files in {0}:".format(d))
             for line in textwrap.wrap(filestring,
                                       break_on_hyphens=False,
                                       width=76):
@@ -186,8 +186,8 @@ def get_cow_path(cow):
         elif os.path.isfile(cow + ".cow"):
             full_path = cow + ".cow"
         else:
-            print(("Could not find {}"
-                   " cowfile in {}").format(cow, os.path.split(cow)[0]))
+            print(("Could not find {0}"
+                   " cowfile in {1}").format(cow, os.path.split(cow)[0]))
     else:
         for d in cowpath.split(os.pathsep):
             if os.path.isfile(os.path.join(d, cow)):
@@ -197,7 +197,7 @@ def get_cow_path(cow):
                 full_path = os.path.join(d, cow + ".cow")
                 break
         if full_path == "":
-            print("Could not find {} cowfile!".format(cow))
+            print("Could not find {0} cowfile!".format(cow))
             sys.exit(1)
     return full_path
 
