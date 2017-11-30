@@ -44,11 +44,19 @@ else:
         #for mac osx
         cowpath = os.pathsep.join([
             os.path.join(sys.prefix, "/usr/local/share/cows/"),
+            # The following is necessary to find cows if this was installed
+            # to an unexpected path, such as with `pip install --user`.
+            os.path.join(os.path.dirname(os.path.dirname(__file__)),
+                         "share/cows"),
         ])  
     else:
         cowpath = os.pathsep.join([
             os.path.join(sys.prefix, "share/cows"),
             os.path.join(sys.prefix, "local/share/cows"),
+            # The following is necessary to find cows if this was installed
+            # to an unexpected path, such as with `pip install --user`.
+            os.path.join(os.path.dirname(os.path.dirname(__file__)),
+                         "share/cows"),
             # The following is necessary to maintain compatibility
             # with some GNU/Linux distro for which, I think, some
             # packagers took the liberty of tinkering with the
